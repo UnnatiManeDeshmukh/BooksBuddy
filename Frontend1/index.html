@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookBuddy - Request a Book</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url("background.png") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.93); /* transparent effect */
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .msg {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .admin-section {
+      display: none;
+      margin-top: 30px;
+      background: #eef;
+      padding: 15px;
+      border-radius: 10px;
+      
+    }
+
+    table {
+      width:60%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    td:last-child {
+      min-width: 160px; /* Actions column width */
+    }
+
+    .action-btn {
+      margin-right: 6px;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .approve-btn {
+      background-color: #28a745;
+      color: white;
+      width: 80px;
+    }
+
+    .deny-btn {
+      background-color: #dc3545;
+      color: white;
+      width: 80px;
+    }
+    
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Request a Book</h2>
+  <form id="bookForm">
+    <label for="userName">Your Name:</label>
+    <input type="text" id="userName" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required />
+
+    <label for="bookTitle">Book Title:</label>
+    <input type="text" id="bookTitle" required />
+
+    <label for="author">Author:</label>
+    <input type="text" id="author" required />
+
+    <button type="submit">Submit Request</button>
+  </form>
+  <div class="msg" id="msg"></div>
+
+  <button id="adminBtn">🔐 View All Requests (Admin)</button>
+
+  <div class="admin-section" id="adminSection">
+    <h3>All Book Requests</h3>
+    <table id="requestTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Book</th>
+          <th>Author</th>
+          <th>Status</th>
+          <th id="action">Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("bookForm");
+  const msg = document.getElementById("msg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = {
+      userName: document.getElementById("userName").value,
+      email: document.getElementById("email").value,
+      bookTitle: document.getElementById("bookTitle").value,
+      author: document.getElementById("author").value
+    };
+
+    try {
+      const response = await fetch("http://localhost:7777/api/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        msg.innerText = "Request submitted successfully!";
+        form.reset();
+      } else {
+        msg.innerText = "Failed to submit request.";
+      }
+    } catch (error) {
+      msg.innerText = "Error: " + error;
+    }
+  });
+
+  const adminBtn = document.getElementById("adminBtn");
+  const adminSection = document.getElementById("adminSection");
+  const tableBody = document.querySelector("#requestTable tbody");
+
+  adminBtn.addEventListener("click", () => {
+    const password = prompt("Enter Admin Password:");
+    if (password === "unnu") {
+      adminSection.style.display = "block";
+      loadRequests();
+    } else {
+      alert("Incorrect password!");
+    }
+  });
+
+  async function loadRequests() {
+    try {
+      const res = await fetch("http://localhost:7777/api/request");
+      const data = await res.json();
+      tableBody.innerHTML = "";
+      data.forEach((req) => {
+        const row = `<tr id="row-${req.id}">
+          <td>${req.id}</td>
+          <td>${req.userName}</td>
+          <td>${req.email}</td>
+          <td>${req.bookTitle}</td>
+          <td>${req.author}</td>
+          <td>${req.status || 'Pending'}</td>
+          <td>
+            ${req.status === "Approved" ? "✅ Approved" : `
+              <button class="action-btn approve-btn" onclick="approveRequest(${req.id})">Approve</button>
+              <button class="action-btn deny-btn" onclick="denyRequest(${req.id})">Deny</button>
+            `}
+          </td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    } catch (e) {
+      alert("Failed to load requests.");
+    }
+  }
+
+  async function approveRequest(id) {
+    try {
+      const res = await fetch(`http://localhost:7777/api/request/${id}/approve`, {
+        method: "PUT"
+      });
+      if (res.ok) {
+        alert("✅ Request approved!");
+        loadRequests();
+      } else {
+        alert("Error approving request.");
+      }
+    } catch (err) {
+      alert("Network error.");
+    }
+  }
+
+  async function denyRequest(id) {
+    if (confirm("Are you sure you want to deny this request?")) {
+      try {
+        const res = await fetch(`http://localhost:7777/api/request/${id}`, {
+          method: "DELETE"
+        });
+        if (res.ok) {
+          alert("❌ Request denied and removed.");
+          document.getElementById(`row-${id}`).remove();
+        } else {
+          alert("Error denying request.");
+        }
+      } catch (err) {
+        alert("Network error.");
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
