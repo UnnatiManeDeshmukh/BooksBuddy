@@ -82,7 +82,7 @@ python -m http.server
 ```
 
 2. Visit the web page  
-[http://localhost:](http://localhost:5566)
+[http://localhost:5566](http://localhost:5566)
 
 > 📢 Ensure backend is running at `http://localhost:7766`
 
