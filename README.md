@@ -78,13 +78,13 @@ spring.jpa.hibernate.ddl-auto=update
 1. Open terminal in `frontend/` folder  
 ```bash
 cd ../frontend
-python -m http.server 3000
+python -m http.server 
 ```
 
 2. Visit the web page  
-[http://localhost:](http://localhost:)
+[http://localhost:](http://localhost:5566)
 
-> 📢 Ensure backend is running at `http://localhost:`
+> 📢 Ensure backend is running at `http://localhost:7766`
 
 ---
 
