@@ -99,21 +99,15 @@ Enter password: `unnu`
 ## 📸 Preview
 
 ### 🧾 Request Form  
-![Request Form]()
+![Request Form](https://github.com/UnnatiManeDeshmukh/BooksBuddy/blob/main/Frontend1/POST_OP.JPG)
 
 ### ✅ Admin Panel  
-![Admin Panel]()
+![Admin Panel](https://github.com/UnnatiManeDeshmukh/BooksBuddy/blob/main/Frontend1/OutPut1.JPG)
 
-## 📸 Preview
 
-### 🧾 Request Form  
-![Request Form](OutPut1.JPG)
-
-### ✅ Admin Panel  
-![Admin Panel](OutPut.JPG)
 
 ### 🧪 API Testing (Postman)  
-![API Postman Output](POST_OP.JPG)
+![API Postman Output](https://github.com/UnnatiManeDeshmukh/BooksBuddy/blob/main/Frontend1/POST_OP.JPG)
 ---
 
 ## 📬 API Tested Using Postman
@@ -132,6 +126,23 @@ Enter password: `unnu`
 
 ---
 
-## 🌟 Thank You!
+---
 
-If you found this helpful, please ⭐️ the repo!
+## 🙏 Thank You
+
+Thank you for visiting the **BooksBuddy** project repository!  
+We hope this project helps you understand full-stack integration using **Spring Boot** and **HTML/CSS/JS**.  
+Feel free to explore, use, or improve the code. 😊
+
+
+
+---
+
+## 📬 Contact Me
+
+If you have any queries, suggestions, or feedback, feel free to reach out:
+
+- 📧 Email: unnatimd22@gmail.com  
+- 🌐 GitHub: [UnnatiManeDeshmukh](https://github.com/UnnatiManeDeshmukh)
+
+---
