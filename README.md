@@ -99,10 +99,10 @@ Enter password: `unnu`
 ## 📸 Preview
 
 ### 🧾 Request Form  
-![Request Form](https://github.com/UnnatiManeDeshmukh/BookBuddy/blob/main/outpu1.JPG)
+![Request Form]()
 
 ### ✅ Admin Panel  
-![Admin Panel](https://github.com/UnnatiManeDeshmukh/BookBuddy/blob/main/outpu2.JPG)
+![Admin Panel]()
 
 ## 📸 Preview
 
