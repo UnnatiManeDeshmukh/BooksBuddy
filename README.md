@@ -60,8 +60,8 @@ Database name: `bookbuddy_db`
 3. **Configure DB in `application.properties`**  
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/bookbuddy_db
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+spring.datasource.username=postgres
+spring.datasource.password=unnati22
 spring.jpa.hibernate.ddl-auto=update
 ```
 
